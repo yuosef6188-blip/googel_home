@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: white;
+    font-family: Arial, sans-serif;
+    color: #202124;
+}
+
+header {
+    height: 65px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 22px;
+    padding: 0 30px;
+}
+
+header a {
+    color: #202124;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.signin {
+    background: #0b57d0;
+    color: white !important;
+    padding: 12px 25px;
+    border-radius: 25px;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 125px;
+}
+
+.logo {
+    font-size: 92px;
+    font-weight: bold;
+    letter-spacing: -6px;
+    margin-bottom: 30px;
+}
+
+.b {color:#4285f4}
+.r {color:#ea4335}
+.y {color:#fbbc05}
+.g {color:#34a853}
+
+.search {
+    width: min(580px, 90%);
+    height: 52px;
+    border: 1px solid #dfe1e5;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 17px;
+    gap: 12px;
+}
+
+.search:hover {
+    box-shadow: 0 1px 7px #0003;
+}
+
+.search input {
+    flex: 1;
+    width: 0;
+    border: 0;
+    outline: none;
+    font-size: 16px;
+}
+
+.search button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 19px;
+}
+
+.buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.buttons button {
+    background: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    padding: 12px 19px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.buttons button:hover {
+    border-color: #dadce0;
+}
+
+.apps {
+    cursor: pointer;
+    font-size: 23px;
+    border: 0;
+    background: white;
+}
+
+@media(max-width:500px) {
+    main {padding-top:110px}
+    .logo {font-size:70px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="https://mail.google.com">Gmail</a>
+    <a href="https://images.google.com">Images</a>
+    <button class="apps" onclick="showApps()">⠿</button>
+    <a class="signin" href="https://accounts.google.com">Sign in</a>
+</header>
+
+<main>
+
+    <div class="logo">
+        <span class="b">G</span><span class="r">o</span><span class="y">o</span><span class="b">g</span><span class="g">l</span><span class="r">e</span>
+    </div>
+
+    <form class="search" id="search" action="https://www.google.com/search">
+        <span>🔍</span>
+        <input type="text" name="q" id="q"
+        placeholder="Search Google or type a URL" required>
+        <button type="button" onclick="document.getElementById('q').value=''">✕</button>
+        <button type="button" onclick="voice()">🎤</button>
+    </form>
+
+    <div class="buttons">
+        <button onclick="document.getElementById('search').requestSubmit()">
+            Google Search
+        </button>
+
+        <button onclick="lucky()">
+            I'm Feeling Lucky
+        </button>
+    </div>
+
+</main>
+
+<script>
+function lucky() {
+    let q = document.getElementById("q").value.trim();
+    if(q) {
+        window.location.href =
+        "https://www.google.com/search?btnI=1&q=" +
+        encodeURIComponent(q);
+    } else {
+        document.getElementById("q").focus();
+    }
+}
+
+function showApps() {
+    window.location.href = "https://about.google/products/";
+}
+
+function voice() {
+    const Speech = window.SpeechRecognition ||
+                   window.webkitSpeechRecognition;
+
+    if (!Speech) {
+        alert("Voice search is not supported in this browser.");
+        return;
+    }
+
+    const recognition = new Speech();
+    recognition.lang = "fa-IR";
+
+    recognition.onresult = function(e) {
+        document.getElementById("q").value =
+        e.results[0][0].transcript;
+    };
+
+    recognition.start();
+}
+</script>
+
+</body>
+</html>
